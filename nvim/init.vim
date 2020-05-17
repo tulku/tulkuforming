@@ -66,9 +66,9 @@ let g:gutentags_generate_on_missing = 1
 let g:gutentags_generate_on_write = 1
 let g:gutentags_generate_on_empty_buffer = 0
 let g:gutentags_ctags_extra_args = [
-      \ '--tag-relative=yes',
-      \ '--fields=+ailmnS',
-      \ ]
+			\ '--tag-relative=yes',
+			\ '--fields=+ailmnS',
+			\ ]
 
 " Enable spell checker
 set spell
@@ -87,15 +87,39 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
-" Automatically open NERDTree on startup if no file is specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" Ctrl-n Toggles NERDTree
-map <C-n> :NERDTreeToggle<CR>
-" Find something with nerdtree
-map <leader>r :NERDTreeFind<cr>
 let NERDTreeIgnore = ['\.pyc$']
 
 """ Autocomplete options
 " Enable at startup
 let g:deoplete#enable_at_startup = 1
+
+" Enable mouse mode
+set mouse=a
+
+""" Key mappings
+" Toggle NERDTree
+map <leader>n :NERDTreeToggle<CR>
+" Open NERDTree with the current file selected
+map <leader>f :NERDTreeFind<CR>
+" Format the entire document
+nnoremap <leader>fef :normal! gg=G``<CR>
+" upper / lower entire world
+nmap <leader>U mQviwU`Q
+nmap <leader>L mQviwu`Q
+" upper / lower only first letter of word
+nmap <leader>u mQgewvU`Q
+nmap <leader>l mQgewvu`Q
+" Map up down to visible lines instead of real lines (in case of wrap)
+map <Down> gj
+map <Up> gk
+" Move lines up and down using Control.
+nnoremap <silent> <C-Down> :m+<CR>==
+nnoremap <silent> <C-Up> :m-2<CR>==
+inoremap <silent> <C-Down> <Esc>:m+<CR>==gi
+inoremap <silent> <C-Up> <Esc>:m-2<CR>==gi
+vnoremap <silent> <C-Down> :m'>+<CR>gv=gv
+vnoremap <silent> <C-Up> :m-2<CR>gv=gv
+" Open fuzzy file search
+map <C-p> :Files<CR>
+" Open recent files
+map <C-h> :History<CR>

@@ -16,6 +16,15 @@
     state: present
   become: yes
 
+- name: Install python2 neovim package
+  pip:
+    name: pynvim
+
+- name: Install python3 neovim package
+  pip:
+    name: pynvim
+    executable: pip3
+
 - name: Install Neovim
   apt:
     name: "{{ packages }}"
@@ -24,6 +33,14 @@
   vars:
     packages:
     - neovim
+  become: yes
+
+- name: Remove python neovim deb packages
+  apt:
+    name: "{{ packages }}"
+    state: absent
+  vars:
+    packages:
     - python-neovim
     - python3-neovim
   become: yes
