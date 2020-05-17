@@ -1,7 +1,7 @@
-# Even on 18.04, the version in apt is ooooold so we install from targball.
+# Even on 18.04, the version in apt is ooooold so we install from tarball.
 - name: Download and untar hub scripts
   unarchive:
-    src: https://github.com/github/hub/releases/download/v2.6.0/hub-linux-amd64-2.6.0.tgz
+    src: https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
     dest: /tmp/
     remote_src: yes
 
@@ -12,5 +12,4 @@
     mode: 0750
 
 - name: Locally installing hub scripts
-  command: cp /tmp/hub-linux-amd64-2.6.0/bin/hub ~/config/local/bin/
-
+  command: cp /tmp/hub-linux-amd64-2.14.2/bin/hub ~/config/local/bin/

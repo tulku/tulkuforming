@@ -1,31 +1,41 @@
-set so=7 "display some rows below the cursor when scrolling
+" List plugins I want to use. To install run :PlugInstall inside NeoVim.
+call plug#begin('~/.local/share/nvim/site/plugged')
+" Nice status line
+Plug 'itchyny/lightline.vim'
+" Show a file tree to the left with git changes status
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" Fuzzy file search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Show changes using git on the side of the file
+Plug 'airblade/vim-gitgutter'
+" Comment / uncomment code
+Plug 'preservim/nerdcommenter'
+" Code navigation using ctags
+Plug 'ludovicchabant/vim-gutentags'
+" Show a panel with the tags that exist in the current buffer.
+Plug 'majutsushi/tagbar'
+" Multiple cursors in Vim
+Plug 'terryma/vim-multiple-cursors'
+" Autocomplete for Vim
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+call plug#end()
 
-set nobackup
-set nowb
-set noswapfile
+" Do not show --INSERT-- as it is in the line already.
+set noshowmode
 
-set expandtab
-set shiftwidth=4
-set tabstop=4
-set smarttab
-set ai "Auto indent
-set si "Smart indet
-set wrap "Wrap lines
+" Make search act like search in modern browsers
+set incsearch
 
-autocmd FileType python setlocal shiftwidth=4 softtabstop=4 tabstop=4
+" Show matching brackets when text indicator is over them
+set showmatch
 
-set incsearch "Make search act like search in modern browsers
-
-set showmatch "Show matching brackets when text indicator is over them
-
-set ruler "Always show current position
-
-set nocompatible
-filetype plugin on
+" Always show current position
+set ruler
 
 " Remove menu bar from gvim
 set guioptions-=m
-
 " Remove toolbar from gvim
 set guioptions-=T
 
@@ -40,91 +50,52 @@ set background=dark
 set t_Co=256
 let g:airline_theme='kalisi'
 
+" enables a paste mode in which auto indent is turned off
+set pastetoggle=<F4>
+
 " hide buffers; don't close them. this way we don't have to save
 " a buffer before switching to another one.
 set hidden
 
-" show tabs, except in xml files
-set list
-set listchars=tab:>.,trail:.,extends:#,nbsp:.
-autocmd filetype html,xml set listchars-=tab:>.
-
-" enables a paste mode in which autoindent is turned off
-set pastetoggle=<F2>
-
-" Use Q for formatting the current paragraph (or selection)
-vmap Q gq
-nmap Q gqap
-
 " save using sudo
 cmap w!! w !sudo tee % >/dev/null
 
-" treat ROS launch files as xml
-cmap w!! w !sudo tee % >/dev/null
-au BufNewFile,BufRead *.launch setfiletype xml
-cmap w!! w !sudo tee % >/dev/null
+" Gutentags options from https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+let g:gutentags_ctags_extra_args = [
+      \ '--tag-relative=yes',
+      \ '--fields=+ailmnS',
+      \ ]
 
-"""""""""""""
-" NERDTree
-""""""""""""""
+" Enable spell checker
+set spell
 
+" Update the gutter faster to reflect git changes
+set updatetime=100
+
+"""" NERDCommenter options
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Automatically open NERDTree on startup if no file is specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Ctrl-n Toggles NERDTree
 map <C-n> :NERDTreeToggle<CR>
+" Find something with nerdtree
 map <leader>r :NERDTreeFind<cr>
-let g:NERDTreeWinSize = 60
 let NERDTreeIgnore = ['\.pyc$']
 
-"""""""""""""
-" Tab navigation shortcuts
-""""""""""""""
-nnoremap tn :tabnew<Space>
-nnoremap tk :tabnext<CR>
-nnoremap tj :tabprev<CR>
-nnoremap th :tabfirst<CR>
-nnoremap tl :tablast<CR>
-
-""""""""""""
-" CtrlP for finding files.
-""""""""""""
-
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = ''
-
-""""""""""""
-" Line width helpers
-""""""""""""
-
-"highlight OverLength ctermbg=red ctermfg=DarkBlue guibg=#FFD9D9
-"match OverLength /\%80v.\+/
-
-set textwidth=100
-
-""""""""""""
-" Rust
-""""""""""""
-
-filetype on
-au BufNewFile,BufRead *.rs set filetype=rust
-
-""""""""""""
-" ROS
-""""""""""""
-
-set makeprg=catkin\ build\ -w\ ..\ --cmake-args\ -DCMAKE_EXPORT_COMPILE_COMMANDS=1
-
-
-""""""""""""
-" Clang-Format
-""""""""""""
-
-map <C-K> :pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
-imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
-
-
-""""""""""""
-" Pathogen
-""""""""""""
-execute pathogen#infect()
-call pathogen#helptags()
-
+""" Autocomplete options
+" Enable at startup
+let g:deoplete#enable_at_startup = 1

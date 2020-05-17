@@ -1,28 +1,9 @@
 - file:
-    src: "{{ config_root_dir }}/tmux/tmux.conf"
-    dest: "{{ ansible_env.HOME }}/.tmux.conf"
-    state: link
-
-- file:
     src: "{{ config_root_dir }}/git/.gitconfig"
     dest: "{{ ansible_env.HOME }}/.gitconfig"
     state: link
 
-- lineinfile:
-    dest: "{{ ansible_env.HOME }}/.bashrc"
-    line: "source {{ config_root_dir }}/sh/rc.bash"
-
-- lineinfile:
-    dest: "{{ ansible_env.HOME }}/.zshrc"
-    line: "source {{ config_root_dir }}/sh/rc.zsh"
-    create: true
-
 - file:
-    src: "{{ config_root_dir }}/clion/.ideavimrc"
-    dest: "{{ ansible_env.HOME }}/.ideavimrc"
-    state: link
-
-- file:
-    src: "{{ config_root_dir }}/vscode/settings.json"
-    dest: "{{ ansible_env.HOME }}/.config/Code/User/settings.json"
+    src: "{{ config_root_dir }}/bash/bash_custom.sh"
+    dest: "{{ ansible_env.HOME }}/.bash_custom.sh"
     state: link

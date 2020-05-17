@@ -18,15 +18,14 @@
 
 - name: Install Neovim
   apt:
-    name: neovim
+    name: "{{ packages }}"
     state: present
     update_cache: yes
-  become: yes
-
-- name: Install Neovim python module
-  pip:
-    name: neovim
-    state: latest
+  vars:
+    packages:
+    - neovim
+    - python-neovim
+    - python3-neovim
   become: yes
 
 - name: Update vi alternatives
@@ -59,4 +58,12 @@
     state: link
     src: "~/config/nvim/colors"
 
+- name: Create nvim plugin directory
+  file:
+    path: ~/.local/share/nvim/site/autoload
+    state: directory
 
+- name: Install vim plug (plugin manager)
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: ~/.local/share/nvim/site/autoload/plug.vim

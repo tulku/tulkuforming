@@ -1,4 +1,4 @@
-# Jon's config file repo
+# Tulku's config file repo
 
 ## Installation instructions
 
@@ -19,7 +19,7 @@ Now add the key in `~/.ssh/id_rsa.pub` to github.
 Clone this config repo.
 
 ```bash
-git clone git@github.com:jonbinney/jdb-config config
+https://github.com/tulku/tulkuforming config
 ```
 
 Use the standard version of Ansible to install the newest PPA version of Ansible.

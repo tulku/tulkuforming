@@ -1,0 +1,5 @@
+- name: Source custom bash file
+  lineinfile:
+    path: ~/.bashrc
+    line: source ~/.bash_custom.sh
+    state: preset

@@ -1,0 +1,8 @@
+- name: Download install script
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup
+
+# Install rust using all defaults.
+- name: Run the install script
+  script: /tmp/rustup -y

@@ -5,14 +5,12 @@
 ---
 - hosts: all
   roles:
-      - { role: apt_packages }
       - { role: neovim }
-      - { role: neovim_plugins }
       - { role: hub }
-      - { role: ros }
-        # - { role: kicad }  (this takes too long to install; removing for now)
-      - { role: zsh }
-      - { role: dot_files, tags: [dot_files] }
+      - { role: bash }
+      - { role: rust }
+      - { role: dot_files}
+
   tasks:
     - name: Disable apport (Ubuntu bug notification service)
       lineinfile:
@@ -20,4 +18,3 @@
         regexp: '^enabled='
         line: 'enabled=0'
       become: yes
-
